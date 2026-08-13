@@ -233,8 +233,8 @@ void keyboard_post_init_user(void) {
 layer_state_t layer_state_set_user(layer_state_t state) {
 #ifdef RGBLIGHT_LAYERS
     rgblight_set_layer_state(1, layer_state_cmp(state, _LOWER));
-    rgblight_set_layer_state(2, layer_state_cmp(state, _UPPER));
-    rgblight_set_layer_state(3, layer_state_cmp(state, _CLIP));
+    rgblight_set_layer_state(2, layer_state_cmp(state, _RAISE));
+    rgblight_set_layer_state(3, layer_state_cmp(state, _ADJUST));
 #endif
 
 #ifdef OLED_ENABLE
@@ -296,9 +296,9 @@ void draw_left_status(void){
     int dx = OLED_DISPLAY_WIDTH;
 
     int index = 0;
-    if(layer_state_cmp(layer_state, _CLIP)){
+    if(layer_state_cmp(layer_state, _ADJUST)){
         index = 3;
-    }else if(layer_state_cmp(layer_state, _UPPER)){
+    }else if(layer_state_cmp(layer_state, _RAISE)){
         index = 2;
     }else if(layer_state_cmp(layer_state, _LOWER)){
         index = 1;
