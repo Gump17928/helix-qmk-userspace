@@ -8,78 +8,58 @@
 #include "oled_pct.h"
 #endif
 
-// 日本語キーボード特有のキーを使用する
-#include "keymap_japanese.h"
-
-// それぞれのわかりやすい名前のレイヤー名は、以降のキーマップマトリクスで使用される
-// アンダースコアに特別な意味はなく、自由に設定しても問題ない
-// 名前の長さも統一する必要はなく、数字のみにする(enumではなくdefineで定義するなど)こともできる
+// #include "keymap_japanese.h"
 enum layer_number {
-  _BASE = 0,
-  _LOWER,
-  _UPPER,
-  _CLIP
+    _BASE = 0,
+    _FUNC,
+    _VIA1,
+    _VIA2,
 };
 
-// 独自のキーコードの定義。SAFE_RANGEにより固有の数値を確保することが保証される
-// 独自キーが押されたかの判断はprocess_record_userで調べる
+
 enum custom_keycodes {
   MAC_WIN = SAFE_RANGE,
 };
 
-// レイヤーモード
-// DF - デフォルトレイヤー
-// MO - 押している間だけ切り替え
-// TG - 押すごとに切り替え
-// OSL - 何かしらのキーが押されたら直前のレイヤーに戻る
 #define DL_BAS  DF(_BASE)
-#define ML_LOW  MO(_LOWER)
-#define ML_UPP  MO(_UPPER)
-#define ML_CLIP TG(_CLIP)
+#define ML_FUNC  MO(_LOWER)
+#define ML_VIA1  MO(_RAISE)
+#define ML_VIA2  MO(_ADJUST)
 
-
-// ______ - 下層レイヤーのキーを引き継ぐ
-// XXXXXX - ほかのレイヤーのキーは引き継がず、無効にする
-// C() - Ctrlキーとの組み合わせ
-// S() - Shiftキーとの組み合わせ
-// A() - Altキーとの組み合わせ
-// C(S()) - Ctrl+Shiftの組み合わせ
-// MT(A,B) - おしたままならA(ShiftやAltなどのMODキー限定)をタップならBを実行
-// OSM() - 何かしらのキーが押されるまでは()内のキーを有効にする
 
 // keymapviz keymap.c -k helix -t json -o hremix{}.json
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = KEY_LAYOUT( \
     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,   KC_5,                   KC_6,   KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, \
-    JP_ZKHK, KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,                   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,   \
+    _______, KC_Q,    KC_W,    KC_E,    KC_R,   KC_T,                   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,   \
     KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,   KC_G,                   KC_H,   KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT, \
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,   KC_B,   KC_ENT, KC_DEL, KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_UP,   KC_RSFT,  \
     KC_LCTL, KC_LALT, KC_LGUI, ML_CLIP, ML_UPP, ML_LOW, KC_SPC, KC_SPC, ML_LOW, ML_CLIP, KC_PSCR, KC_LEFT, KC_DOWN, KC_RGHT  \
     ),
 
   [_LOWER] = KEY_LAYOUT( \
-    S(KC_SCLN), KC_MINS,   S(JP_COLN), KC_SLSH,    S(KC_5),    S(KC_MINS),                   JP_CIRC,    JP_YEN,     KC_PEQL, KC_PSLS,  KC_PAST, KC_PMNS, \
+    S(KC_SCLN), KC_MINS,   _______, KC_SLSH,    S(KC_5),    S(KC_MINS),                   JP_CIRC,    JP_YEN,     KC_PEQL, KC_PSLS,  KC_PAST, KC_PMNS, \
     S(JP_YEN),  S(KC_6),   S(KC_1),    S(KC_SLSH), JP_AT,      JP_YEN,                       JP_AT,      JP_LBRC,    KC_P7,   KC_P8,    KC_P9,   KC_BSPC,  \
     S(KC_8),    S(KC_9),   JP_LBRC,    JP_RBRC,    S(JP_LBRC), S(JP_RBRC),                   JP_COLN,    JP_RBRC,    KC_P4,   KC_P5,    KC_P6,   KC_PENT, \
     S(KC_COMM), S(KC_DOT), S(JP_BSLS), JP_CIRC,    S(JP_AT),   S(JP_CIRC), KC_SLEP, KC_SLEP, KC_SLSH,    JP_BSLS,    KC_P1,   KC_P2,    KC_P3,   KC_RALT, \
-    _______,    _______,   _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    _______, _______, S(KC_SLSH), S(JP_BSLS), KC_P0,   KC_COMMA, KC_PDOT, KC_PPLS \
+    _______,    _______,   _______,    _______,    _______,    _______,    _______, _______, S(KC_SLSH), S(JP_BSLS), KC_P0,   KC_COMMA, KC_PDOT, KC_PPLS \
     ),
 
-  [_UPPER] = KEY_LAYOUT( \
+  [_RAISE] = KEY_LAYOUT( \
     KC_F1,      KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11 , KC_F12 , \
-    S(KC_CAPS), KC_NLCK, KC_CALC, KC_MYCM, KC_MAIL, KC_WHOM,                   _______, _______, KC_NLCK, KC_PSCR, KC_SLCK, KC_PAUSE, \
+    S(KC_CAPS), KC_NUM, KC_CALC, KC_MYCM, KC_MAIL, KC_WHOM,                   _______, _______, KC_NUM, KC_PSCR, KC_SCRL, KC_PAUSE, \
     KC_VOLD,    KC_VOLU, KC_MUTE, KC_MPLY, KC_MPRV, KC_MNXT,                   _______, _______, _______, KC_INS,  KC_HOME, KC_PGUP, \
     _______,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,  KC_END,  KC_PGDN, \
-    _______,    MAC_WIN, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
+    _______,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
     ),
     
-  [_CLIP] =  KEY_LAYOUT( \
-    _______, _______, _______, _______, _______, _______,                     KC_KP_1,    KC_KP_2,    KC_KP_3,       KC_KP_4, KC_KP_5, JP_ZKHK, \
+  [_ADJUST] =  KEY_LAYOUT( \
+    _______, _______, _______, _______, _______, _______,                     KC_KP_1,    KC_KP_2,    KC_KP_3,       KC_KP_4, KC_KP_5, _______, \
     _______, _______, _______, _______, _______, _______,                     KC_KP_6,    KC_KP_7,    KC_KP_8,       KC_KP_9, KC_KP_0, KC_BSPC, \
     _______, _______, _______, _______, _______, _______,                     LCA(KC_F1), LCA(KC_F2), S(G(KC_RGHT)), KC_LSFT, KC_LCTL, KC_ENT, \
     _______, _______, _______, _______, _______, _______, _______,   _______, C(KC_X),    C(KC_C),    C(KC_V),       KC_LGUI, KC_UP,   KC_SPC, \
-    _______, _______, _______, _______, _______, _______, _______,   _______, ML_UPP,     ML_CLIP,    KC_PSCR,       KC_LEFT, KC_DOWN, KC_RGHT \
+    _______, _______, _______, _______, _______, _______, _______,   _______, _______,     _______,    KC_PSCR,       KC_LEFT, KC_DOWN, KC_RGHT \
     ),
 };
 
@@ -162,11 +142,7 @@ const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 );
 
 void init_rgb_layers(void){
-    // 左側のボードなら色キャッシュ配列の0~31番を、
-    // 右側のボードなら色キャッシュ配列の32～63番を反映させる
     rgblight_set_clipping_range(is_keyboard_master() ? 0 : 32, 32);
-
-    // QMKが予約している変数に代入することで、照明レイヤーを初期化
     rgblight_layers = rgb_layers;
 
     rgblight_set_layer_state(0, true);
@@ -197,7 +173,7 @@ key_state_r_t key_state_r;
 extern user_config_t user_config;
 
 #ifdef OLED_ENABLE
-// ビットマップ転送は負荷がかかるので、更新を必要最低限に
+
 static bool require_oled_update = true;
 
 void oled_update(bool update_left){
@@ -212,7 +188,7 @@ void oled_update(bool update_left){
 #define oled_update(ul)
 #endif
 
-// GUIキーとALTキーの位置を入れ替えるMacモード
+// GUI
 void swap_alt_gui(bool swap) {
     key_state_r.swap_gui = swap;
     oled_update(false);
@@ -226,13 +202,11 @@ void swap_alt_gui(bool swap) {
     }
 }
 
-// EEPROMの初期化が必要なときに呼ばれる
 void eeconfig_init_user(void) {
     user_config.raw = 0x00;
     eeconfig_update_user(user_config.raw);
 }
 
-// スレーブ側同期ハンドラ
 #ifdef OLED_ENABLE
 void user_sync_a_slave_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
     const key_state_r_t *ks = (const key_state_r_t*)in_data;
@@ -263,10 +237,8 @@ void keyboard_post_init_user(void) {
 #endif
 }
 
-// レイヤー状態が変更されたときに呼び出される
 layer_state_t layer_state_set_user(layer_state_t state) {
 #ifdef RGBLIGHT_LAYERS
-    // 変更されたレイヤーと一致する照明レイヤーのみを適用
     rgblight_set_layer_state(1, layer_state_cmp(state, _LOWER));
     rgblight_set_layer_state(2, layer_state_cmp(state, _UPPER));
     rgblight_set_layer_state(3, layer_state_cmp(state, _CLIP));
@@ -279,7 +251,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
-// キーが押されたときに呼び出される関数
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
     case KC_LSFT:
@@ -316,7 +287,6 @@ bool led_update_user(led_t led_state){
 
 #ifdef OLED_ENABLE
 
-// OLEDを初期化するときに呼ばれる関数。戻り値は実際に適用する回転角度
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return rotation;
 }
@@ -383,7 +353,6 @@ void draw_right_status(void){
     }
 }
 
-// OLEDが更新されるときに呼び出される関数
 bool oled_task_user(void) {
     static uint8_t last_state = 0;
 
