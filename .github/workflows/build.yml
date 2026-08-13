@@ -14,6 +14,10 @@ jobs:
     with:
       qmk_repo: qmk/qmk_firmware
       qmk_ref: master
+      # helix_remix isn't in mainline QMK; stage it under qmk_firmware/keyboards
+      # so qmk.path.is_keyboard() can find it.
+      preparation_command: |
+        cp -r keyboards/helix_remix qmk_firmware/keyboards/helix_remix
 
   publish:
     needs: build
