@@ -8,7 +8,6 @@
 #include "oled_pct.h"
 #endif
 
-// #include "keymap_japanese.h"
 enum layer_number {
     _BASE = 0,
     _LOWER,
@@ -66,9 +65,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define HSV_KEY_ARROW 38,252,255
 #define HSV_KEY_TENKEY 115,206,214
 #define HSV_KEY_SPACE 182,150,241
-#define HSV_KEY_LAYER_LOW 68,206,219
-#define HSV_KEY_LAYER_HIGH 166,216,227
-#define HSV_KEY_LAYER_CLIP 187,167,232
+#define HSV_KEY_LAYER_LOWER 68,206,219
+#define HSV_KEY_LAYER_RAISE 166,216,227
+#define HSV_KEY_LAYER_ADJUST 187,167,232
 
 
 const rgblight_segment_t PROGMEM led_base_layer[] = RGBLIGHT_LAYER_SEGMENTS(
@@ -76,63 +75,63 @@ const rgblight_segment_t PROGMEM led_base_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {6, 1, HSV_KEY_FUNC},
     {12, 1, HSV_KEY_FUNC},
     {18, 1, HSV_KEY_FUNC}, {24, 1, HSV_KEY_FUNC},
-    {25, 3, HSV_KEY_FUNC}, {28, 1, HSV_KEY_LAYER_CLIP },
-      {29, 1, HSV_KEY_LAYER_HIGH }, {30, 1, HSV_KEY_LAYER_LOW },
+    {25, 3, HSV_KEY_FUNC}, {28, 1, HSV_KEY_LAYER_ADJUST },
+      {29, 1, HSV_KEY_LAYER_RAISE }, {30, 1, HSV_KEY_LAYER_LOWER },
       {31, 1, HSV_KEY_SPACE },
 
     {38, 1, HSV_KEY_FUNC},
     {44, 1, HSV_KEY_FUNC},
     {50, 1, HSV_KEY_FUNC}, { 51, 1, HSV_KEY_ARROW }, { 56, 1, HSV_KEY_FUNC },
     {57, 3, HSV_KEY_ARROW}, { 60, 1, HSV_KEY_FUNC },
-      {61, 1, HSV_KEY_LAYER_CLIP}, {62, 1, HSV_KEY_LAYER_LOW},
+      {61, 1, HSV_KEY_LAYER_ADJUST}, {62, 1, HSV_KEY_LAYER_LOWER},
       {63, 1, HSV_KEY_SPACE }
 );
 
 const rgblight_segment_t PROGMEM rgb_lower_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0, 6, HSV_KEY_LAYER_LOW},
-    {6, 6, HSV_KEY_LAYER_LOW},
-    {12, 6, HSV_KEY_LAYER_LOW},
-    {18, 6, HSV_KEY_LAYER_LOW},
+    {0, 6, HSV_KEY_LAYER_LOWER},
+    {6, 6, HSV_KEY_LAYER_LOWER},
+    {12, 6, HSV_KEY_LAYER_LOWER},
+    {18, 6, HSV_KEY_LAYER_LOWER},
 
-    {32, 4, HSV_KEY_TENKEY}, {36, 2, HSV_KEY_LAYER_LOW},
-    {38, 1, HSV_KEY_FUNC}, {37, 3, HSV_KEY_TENKEY}, {42, 2, HSV_KEY_LAYER_LOW},
-    {44, 1, HSV_KEY_FUNC}, {45, 3, HSV_KEY_TENKEY}, {48, 2, HSV_KEY_LAYER_LOW},
-    {50, 1, HSV_KEY_FUNC}, {51, 3, HSV_KEY_TENKEY}, {54, 2, HSV_KEY_LAYER_LOW},
-    {57, 4, HSV_KEY_TENKEY}, {61, 2, HSV_KEY_LAYER_LOW}
+    {32, 4, HSV_KEY_TENKEY}, {36, 2, HSV_KEY_LAYER_LOWER},
+    {38, 1, HSV_KEY_FUNC}, {37, 3, HSV_KEY_TENKEY}, {42, 2, HSV_KEY_LAYER_LOWER},
+    {44, 1, HSV_KEY_FUNC}, {45, 3, HSV_KEY_TENKEY}, {48, 2, HSV_KEY_LAYER_LOWER},
+    {50, 1, HSV_KEY_FUNC}, {51, 3, HSV_KEY_TENKEY}, {54, 2, HSV_KEY_LAYER_LOWER},
+    {57, 4, HSV_KEY_TENKEY}, {61, 2, HSV_KEY_LAYER_LOWER}
 );
 
 const rgblight_segment_t PROGMEM rgb_high_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0, 6, HSV_KEY_LAYER_HIGH},
-    {6, 5, HSV_KEY_LAYER_HIGH},
-    {12, 6, HSV_KEY_LAYER_HIGH},
+    {0, 6, HSV_KEY_LAYER_RAISE},
+    {6, 5, HSV_KEY_LAYER_RAISE},
+    {12, 6, HSV_KEY_LAYER_RAISE},
 
-    {32, 6, HSV_KEY_LAYER_HIGH},
-    {38, 4, HSV_KEY_LAYER_HIGH},
-    {44, 3, HSV_KEY_LAYER_HIGH},
-    {50, 3, HSV_KEY_LAYER_HIGH}
+    {32, 6, HSV_KEY_LAYER_RAISE},
+    {38, 4, HSV_KEY_LAYER_RAISE},
+    {44, 3, HSV_KEY_LAYER_RAISE},
+    {50, 3, HSV_KEY_LAYER_RAISE}
 );
 
-const rgblight_segment_t PROGMEM rgb_clip_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+const rgblight_segment_t PROGMEM rgb_adjust_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {0, 1, HSV_KEY_FUNC },
     {6, 1, HSV_KEY_FUNC},
     {12, 1, HSV_KEY_FUNC},
     {18, 1, HSV_KEY_FUNC}, {24, 1, HSV_KEY_FUNC},
-    {25, 3, HSV_KEY_FUNC}, {28, 1, HSV_KEY_LAYER_CLIP },
-      {29, 1, HSV_KEY_LAYER_HIGH }, {30, 1, HSV_KEY_LAYER_LOW },
+    {25, 3, HSV_KEY_FUNC}, {28, 1, HSV_KEY_LAYER_ADJUST },
+      {29, 1, HSV_KEY_LAYER_RAISE }, {30, 1, HSV_KEY_LAYER_LOWER },
       {31, 1, HSV_KEY_SPACE },
 
     {32, 1, HSV_KEY_FUNC}, 
     {38, 1, HSV_KEY_FUNC}, 
     {44, 6, HSV_KEY_FUNC}, 
     {50, 1, HSV_KEY_SPACE}, {51, 1, HSV_KEY_ARROW }, {52, 4, HSV_KEY_FUNC },
-    {57, 3, HSV_KEY_ARROW}, {60, 1, HSV_KEY_FUNC }, {61, 1, HSV_KEY_LAYER_HIGH }, {62, 1, HSV_KEY_LAYER_CLIP } 
+    {57, 3, HSV_KEY_ARROW}, {60, 1, HSV_KEY_FUNC }, {61, 1, HSV_KEY_LAYER_RAISE }, {62, 1, HSV_KEY_LAYER_ADJUST } 
 );
 
 const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     led_base_layer,
     rgb_lower_layer,
     rgb_high_layer,
-    rgb_clip_layer
+    rgb_adjust_layer
 );
 
 void init_rgb_layers(void){
