@@ -4,7 +4,7 @@
     "maintainer": "TNKSoftware",
     "url": "https://github.com/TNKSoftware/helix_remix",
     "processor": "atmega32u4",
-    "bootloader": "caterina",
+    "bootloader": "atmel-dfu",
     "diode_direction": "COL2ROW",
     "debounce": 5,
     "usb": {
