@@ -13,7 +13,7 @@
 #define RGBLIGHT_SLEEP
 
 /* Data-in pin. */
-#define RGB_DI_PIN D3
+#define WS2812_DI_PIN D3
 
 /* Keep brightness capped to avoid pro-micro brownout. */
 #define RGBLIGHT_LIMIT_VAL 35
