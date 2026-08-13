@@ -19,9 +19,9 @@
 #define RGBLIGHT_LIMIT_VAL 35
 
 /* 32 LEDs per half. */
-#define RGBLED_NUM 64
+#define RGBLIGHT_LED_COUNT 64
 #define RGBLIGHT_SPLIT
-#define RGBLED_SPLIT {32, 32}
+#define RGBLIGHT_LED_SPLIT {32, 32}
 
 #define RGBLIGHT_LAYERS
 
